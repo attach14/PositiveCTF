@@ -16,8 +16,7 @@ contract WrappedEtherTest is BaseTest {
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        instance.withdrawAll();
         checkSuccess();
     }
 

